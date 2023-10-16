@@ -4,13 +4,13 @@ const Navbar = () => {
     return ( 
         <nav>
         <div className = "left">
-            <img src={siteLogo} />
+            <img src={siteLogo} alt='logo'/>
         </div>
         {/* unordered list <ul> */}
         <div className="right">
         <ul>
             <li>
-            <a href="#">LOGIN?</a>
+            <a href="#home">LOGIN?</a>
             </li>
         </ul>
         </div>

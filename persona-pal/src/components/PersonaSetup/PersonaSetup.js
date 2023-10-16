@@ -13,8 +13,8 @@ const ProfileSetup = () => {
         <div className = "page-container">
             <Navbar/>
             <div className="independentVar">
+                <img src={SelectTraits} alt='header'/>
                 <div className='dropdown'>
-                    <img src={SelectTraits} />
                     <Multiselect
                     options={selection1}
                     isObject = {false}
@@ -55,6 +55,9 @@ const ProfileSetup = () => {
                     onRemove={(event) => {console.log(event)}} // Function will trigger on remove event
                     placeholder="selection5" // Property name to display in the dropdown options
                     />
+                </div>
+                <div className='buttonArea'>
+                    <button className='submitButton'>Submit!</button>
                 </div>
             </div>
         </div>

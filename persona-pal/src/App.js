@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import PersonaSetup from './components/PersonaSetup/PersonaSetup';
 function App() {
@@ -8,5 +7,6 @@ function App() {
     </>
   );
 }
+//npm i multiselect-react-dropdown --save
 
 export default App;
