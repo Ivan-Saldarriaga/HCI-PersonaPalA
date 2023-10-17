@@ -25,11 +25,12 @@ pipe.to(device)
 @app.get("/")
 def generate(prompt): 
     with autocast(device): 
-        image = pipe(prompt, guidance_scale=8.5).images[0]
+        negative_prompt = "low quality, bad quality, bad anatomy, low res"
+        image = pipe(prompt=prompt, negative_prompt=negative_prompt, guidance_scale=8.5).images[0]
 
 
     # Converts it into the format of an image
-    # image.save("testimage.png")
+    image.save("testimage.png")
     buffer = BytesIO()
     image.save(buffer, format="PNG")
     imgstr = base64.b64encode(buffer.getvalue())
