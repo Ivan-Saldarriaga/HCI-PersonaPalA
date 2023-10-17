@@ -1,16 +1,30 @@
 
 .page-container{
-    height: 100%;
+    height: 100vh;
+    display: grid;
+    /* change to 1fr 2fr 1fr if auto is acting strange! */
+    grid-template-columns: auto 2fr auto;
+    grid-template-areas: ". center .";
 }
 .independentVar{
     background-color: #9D317E;
     display: flex;
-    width: 25%;
-    height: 100%;
-    justify-content: center;
+    /* height: 100%; */
+    /* justify-content: center; */
     padding: 20px 0;
-    display: flex;
     flex-direction: column;
+}
+.savedImages{
+    background-color: #9D317E;
+    display: flex;
+    /* width: 25%; */
+    /* height: 100%; */
+    /* justify-content: center; */
+    padding: 20px 0; 
+    align-items: center;
+    margin: 80px 0;
+    border-radius: 20px 0px 0px 20px;
+    box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .independentVar img{
     scale: 0.6;
@@ -34,4 +48,7 @@
     border: none;
     width: 150px;
     height: 40px;
+}
+.arrowArea{
+    padding: 0 15px;
 }
