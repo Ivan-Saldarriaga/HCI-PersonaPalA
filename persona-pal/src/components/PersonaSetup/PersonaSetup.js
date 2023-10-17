@@ -11,8 +11,10 @@ const ProfileSetup = () => {
     const [selection4, setSelection4] = useState(["op1","op2","op3","op4"]);
     const [selection5, setSelection5] = useState(["op1","op2","op3","op4"]);
     const [drawerVisibility, setDrawerVisibility] = useState(false);
+    const [imageFlipped, flipImage] = useState(false);
     const toggleVisibility = () => {
         setDrawerVisibility(!drawerVisibility);
+        flipImage(!imageFlipped);
     }
     return (  
         <>
@@ -71,7 +73,7 @@ const ProfileSetup = () => {
                 </div>
                 <div className='savedImages'>
                     <div className='arrowArea'>
-                        <img src={arrowIcon} alt='arrowIcon' onClick={toggleVisibility}/>
+                        <img src={arrowIcon} alt='arrowIcon' onClick={toggleVisibility} className={imageFlipped ? 'flipped' : ''}/>
                     </div>
                     {drawerVisibility && (
                         <div className='savedDetails'>

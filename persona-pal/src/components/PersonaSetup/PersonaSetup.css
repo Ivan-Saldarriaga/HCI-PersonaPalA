@@ -52,3 +52,9 @@
 .arrowArea{
     padding: 0 15px;
 }
+.arrowArea img {
+    transition: transform 0.3s ease;
+}
+.flipped {
+    transform: scaleX(-1);
+}
