@@ -81,6 +81,10 @@ const ProfileSetup = () => {
                         </div>
                     )}
                 </div>
+                {drawerVisibility && (
+                        <div className='overlay'>
+                        </div>
+                    )}
             </div>
         </>
     );
