@@ -2,7 +2,8 @@ import './PersonaSetup.css'
 import Navbar from '../Navbar/Navbar'
 import Multiselect from "multiselect-react-dropdown";
 import SelectTraits from '../../assets/Select Traits.svg';
-import arrowIcon from "../../assets/arrow.svg"
+import arrowIcon from "../../assets/arrow.svg";
+import baseImg from "../../assets/download.jpg";
 import { useState } from 'react';
 const ProfileSetup = () => {
     const [selection1, setSelection1] = useState(["op1","op2","op3","op4"]);
@@ -69,7 +70,9 @@ const ProfileSetup = () => {
                     </div>
                 </div>
                 <div className='imageArea'>
-                    img area
+                    <div className='imageHolder'>
+                        <img src={baseImg} alt='baseimg'/>
+                    </div>
                 </div>
                 <div className='savedImages'>
                     <div className='arrowArea'>
@@ -81,6 +84,7 @@ const ProfileSetup = () => {
                         </div>
                     )}
                 </div>
+                {/* adds overlay infornt of everything excepot the saved iamges div (goes away on click of the arrow) NOT NECESARY */}
                 {drawerVisibility && (
                         <div className='overlay'>
                         </div>
