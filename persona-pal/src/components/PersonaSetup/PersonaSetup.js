@@ -6,11 +6,11 @@ import arrowIcon from "../../assets/arrow.svg";
 import baseImg from "../../assets/512.png";
 import { useState } from 'react';
 const ProfileSetup = () => {
-    const [selection1, setSelection1] = useState(["op1","op2","op3","op4"]);
-    const [selection2, setSelection2] = useState(["op1","op2","op3","op4"]);
-    const [selection3, setSelection3] = useState(["op1","op2","op3","op4"]);
-    const [selection4, setSelection4] = useState(["op1","op2","op3","op4"]);
-    const [selection5, setSelection5] = useState(["op1","op2","op3","op4"]);
+    const [selection1, setSelection1] = useState(["Clean","Creative","Peacefull","Reverant"]);
+    const [selection2, setSelection2] = useState(["Charismatic","Mischievous","Comedic","Leader"]);
+    const [selection3, setSelection3] = useState(["Medieval","Modern","Futuristic","Ancient"]);
+    const [selection4, setSelection4] = useState(["Proud","Lazy","Depressed","Gluttonous"]);
+    const [selection5, setSelection5] = useState(["Human","Orc","Elf","Fairy"]);
     const [selectedOptions, setSelectedOptions] = useState(["", "", "", "", ""]);
     const handleDropdownSelect = (index, selectedOption) => {
         const newSelectedOptions = [...selectedOptions];
@@ -58,7 +58,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(1, selectedOption)}
                         onRemove={() => handleDropdownRemove(1)}
-                        placeholder="selection1" // Property name to display in the dropdown options
+                        placeholder="Needs" // Property name to display in the dropdown options
                         />
                         <Multiselect
                         options={selection2}
@@ -66,7 +66,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(2, selectedOption)}
                         onRemove={() => handleDropdownRemove(2)}
-                        placeholder="selection2" // Property name to display in the dropdown options
+                        placeholder="Skill" // Property name to display in the dropdown options
                         />
                         <Multiselect
                         options={selection3}
@@ -74,7 +74,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(3, selectedOption)}
                         onRemove={() => handleDropdownRemove(3)}
-                        placeholder="selection3" // Property name to display in the dropdown options
+                        placeholder="Period" // Property name to display in the dropdown options
                         />
                         <Multiselect
                         options={selection4}
@@ -82,7 +82,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(4, selectedOption)}
                         onRemove={() => handleDropdownRemove(4)}
-                        placeholder="selection4" // Property name to display in the dropdown options
+                        placeholder="Vice" // Property name to display in the dropdown options
                         />
                         <Multiselect
                         options={selection5}
@@ -90,7 +90,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(5, selectedOption)}
                         onRemove={() => handleDropdownRemove(5)}
-                        placeholder="selection5" // Property name to display in the dropdown options
+                        placeholder="Race" // Property name to display in the dropdown options
                         />
                     </div>
                     <div className='buttonArea'>
