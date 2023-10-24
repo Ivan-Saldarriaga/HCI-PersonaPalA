@@ -1,16 +1,58 @@
 
 .page-container{
-    height: 100%;
+    height: 100vh;
+    display: grid;
+    /* change to 1fr 2fr 1fr if auto is acting strange! */
+    grid-template-columns: auto 2fr auto;
+    grid-template-areas: ". center .";
 }
 .independentVar{
     background-color: #9D317E;
     display: flex;
-    width: 25%;
-    height: 100%;
-    justify-content: center;
+    /* height: 100%; */
+    /* justify-content: center; */
     padding: 20px 0;
-    display: flex;
     flex-direction: column;
+}
+.imageArea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imageHolder{
+    background-color: #9D317E;
+    width: 520px;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-container {
+    width: 512px;   /* Set the width of the container */
+    height: 512px;  /* Set the height of the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Clip the image if it's larger */
+}
+.image-container img {
+    width: 100%; /* Set the width of the image to 100% of its parent container */
+    height: 100%; /* Set the height of the image to 100% of its parent container */
+    object-fit: cover; /* Adjusts the image to cover the entire container without stretching */
+  }
+.savedImages{
+    background-color: #9D317E;
+    display: flex;
+    /* width: 25%; */
+    /* height: 100%; */
+    /* justify-content: center; */
+    padding: 20px 0; 
+    align-items: center;
+    margin: 80px 0;
+    border-radius: 20px 0px 0px 20px;
+    box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    position: relative;
 }
 .independentVar img{
     scale: 0.6;
@@ -35,3 +77,24 @@
     width: 150px;
     height: 40px;
 }
+.arrowArea{
+    padding: 0 15px;
+}
+.arrowArea img {
+    transition: transform 0.3s ease;
+}
+.flipped {
+    transform: scaleX(-1);
+}
+/* overlay test */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); 
+    z-index: 1; 
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
