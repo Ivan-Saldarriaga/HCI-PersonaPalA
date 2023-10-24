@@ -40,7 +40,13 @@ function LandingPage() {
         
             <img src={fullTitle} className="fullTitle" />
             <img src={loginButton} className="loginButton" />
-            
+            <GoogleLogin
+                clientId="176425871896-2jfjino16tho0kvlrjfqmqc6qs32nfqa.apps.googleusercontent.com"
+                buttonText="Login with Google"
+                onSuccess={handleGoogleLoginSuccess}
+                onFailure={handleGoogleLoginFailure}
+                cookiePolicy={'single_host_origin'}
+            />
             <img src={team} className="team" />
 
 
