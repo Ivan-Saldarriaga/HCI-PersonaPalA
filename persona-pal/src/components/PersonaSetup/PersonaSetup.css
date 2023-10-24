@@ -98,3 +98,21 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
   }
+
+  .savedDetails {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .userImages {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }

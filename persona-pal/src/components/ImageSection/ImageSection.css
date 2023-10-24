@@ -1,0 +1,10 @@
+.sd-img {
+    height: 512px;
+    width: 512px;
+    background-color: lightslategray;
+}
+
+.imgSection {
+    display: flex;
+    flex-direction: column;
+}

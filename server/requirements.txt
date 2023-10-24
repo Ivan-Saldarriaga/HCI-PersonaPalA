@@ -7,4 +7,3 @@ torchaudio==2.0.2
 torchvision==0.15.2
 transformers==4.31.0
 uvicorn==0.23.2
-
