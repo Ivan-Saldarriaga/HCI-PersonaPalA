@@ -1,0 +1,52 @@
+
+
+.LandingPage{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8e089;
+    display: flex;
+    flex-direction: column;
+}
+img{
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin: auto;
+}
+.googleLogin{
+    visibility: hidden;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin: auto;
+}
+img.fullTitle {
+    /* Welcome to */
+position: relative;
+padding-top: 5%;
+padding-bottom: 2%;
+
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+img.loginButton{
+    padding-bottom: 2%;
+}
+
+.loginButton {
+    background-color: #E7AAF1;
+    padding: 1em;
+    border-radius: 5%;
+    border: none;
+}
+
+
+
+
+
