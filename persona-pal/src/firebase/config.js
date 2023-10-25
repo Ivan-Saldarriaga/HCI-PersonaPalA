@@ -17,6 +17,6 @@ measurementId: "G-34DPXPEYD3"
 const app = initializeApp(config);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-const storage = getStorage(app)
+const storage = getStorage(app);
 
 export { app, auth, googleProvider, storage };

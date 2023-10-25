@@ -1,0 +1,17 @@
+.signed-in-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.signed-in-section p{
+    color: #E7AAF1;
+    margin-right: 2em;
+}
+
+.signed-in-section button, .sign-in-btn {
+    background-color: #E7AAF1;
+    border: none;
+    border-radius: 5%;
+    height: 30px;
+}

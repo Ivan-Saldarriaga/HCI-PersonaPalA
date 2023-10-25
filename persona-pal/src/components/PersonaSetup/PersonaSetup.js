@@ -7,10 +7,11 @@ import arrowIcon from "../../assets/arrow.svg";
 import baseImg from "../../assets/512.png";
 import React, { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../Contexts/authContext';
-import { getUserImages, uploadToFirebase } from '../../firebase/storageService';
+import { getUserImages, uploadToFirebase, getDownloadUrlForFile, removeImageByUrl } from '../../firebase/storageService';
+import { storage } from './../../firebase/config';
 import axios from 'axios';
 
-const promptTemplate = "${0}, ${1}, ${3}, ${2} ${4}, masterpiece, best quality, high quality";
+const promptTemplate = "${0}, ${1}, ${3}, ${2} ${4}, masterpiece, best quality, high quality, self portrait";
 const ProfileSetup = () => {
     const [selection1, setSelection1] = useState(["Clean","Creative","Peacefull","Reverant"]);
     const [selection2, setSelection2] = useState(["Charismatic","Mischievous","Comedic","Leader"]);
@@ -20,6 +21,9 @@ const ProfileSetup = () => {
     const [selectedOptions, setSelectedOptions] = useState(["", "", "", "", ""]);
     {/* Firebase states*/}
     const [images, setImages] = useState([]);
+    const [userImage1, setUserImage1] = useState();
+    const [userImage2, setUserImage2] = useState();
+    const [userImage3, setUserImage3] = useState();
     const [loading, setLoading] = useState(true);
     const {user} = useContext(AuthContext);
     {/* Image States */}
@@ -37,8 +41,13 @@ const ProfileSetup = () => {
         newSelectedOptions[index - 1] = "";
         setSelectedOptions(newSelectedOptions);
     };
+
     const handleSubmit = () => {
         // Check if any of the selected strings are empty
+        if (!user) {
+            alert("Please Log In");
+            return;
+        }
         if (selectedOptions.some((option) => option === "")) {
             // If any of the strings are empty, prevent the submission
             console.log("Please select an option from all dropdowns.");
@@ -63,8 +72,27 @@ const ProfileSetup = () => {
                 return;
             }
             try {
-                const imageURLs = await getUserImages(user);
-                setImages(imageURLs);
+                //const imageURLs = await getUserImages(user);
+                //setImages(imageURLs);
+                getDownloadUrlForFile(`userImages/${user.uid}/image1.png`)
+                    .then((downloadURL) => {
+                        if (downloadURL !== null) {
+                            setUserImage1(downloadURL);
+                        }
+                    });
+                getDownloadUrlForFile(`userImages/${user.uid}/image2.png`)
+                .then((downloadURL) => {
+                    if (downloadURL !== null) {
+                        setUserImage2(downloadURL);
+                    }
+                });
+                getDownloadUrlForFile(`userImages/${user.uid}/image3.png`)
+                .then((downloadURL) => {
+                    if (downloadURL !== null) {
+                        setUserImage3(downloadURL);
+                    }
+                });
+                
             } catch (error) {
                 console.error("Error fetching user images:", error);
             } finally {
@@ -76,15 +104,77 @@ const ProfileSetup = () => {
     }, [user]);
 
     {/* Image functions */}
-    const handleUpload = async () => {
+    const handleUpload = async (index) => {
         try {
-            await uploadToFirebase(image, user);
+            await uploadToFirebase(image, user, index);
             alert('Image uploaded successfully!');
         } catch (error) {
             console.error('Error uploading image:', error);
             alert('Failed to upload image');
         }
+        const downloadUrl = getDownloadUrlForFile(`userImages/${user.uid}/image${index}.png`)
+        if (index === 1) {
+            setUserImage1(downloadUrl);
+        }
+        if (index === 2) {
+            setUserImage2(downloadUrl);
+        }
+        if (index === 3) {
+            setUserImage3(downloadUrl);
+        }
     };
+
+    const handleRemove = async(index) => {
+        try {
+            await removeImageByUrl(`userImages/${user.uid}/image${index}.png`)
+            alert('Image removed Sucessfully!');
+        } catch (error) {
+            console.error('Error removing image:', error);
+            alert('Failed to remove image');
+        }
+        if (index === 1) {
+            setUserImage1(null);
+        }
+        if (index === 2) {
+            setUserImage2(null);
+        }
+        if (index === 3) {
+            setUserImage3(null);
+        }
+    }
+
+    const handleLoadImage = async(index) => {
+        
+        getDownloadUrlForFile(`userImages/${user.uid}/image${index}.png`)
+        .then((url) => {
+            return fetch(url);
+        })
+        .then((response) => {
+            return response.blob();
+        })
+        .then((blob) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+            let base64String = reader.result;
+            // Remove the data URL header (e.g., 'data:image/png;base64,')
+            base64String = base64String.replace(/^data:image\/(png|jpeg);base64,/, '');
+            updateImage(base64String);
+            };
+            reader.readAsDataURL(blob);
+        })
+        .catch((error) => {
+            console.error('Error fetching and converting image:', error);
+        });    
+    };
+
+    const handleDownload = async() => {
+        if (!user || !image) {
+            alert("Please log in or generate an image!");
+        }
+        else {
+            downloadImage(image);
+        }
+    }
 
     const generate = async (prompt) => {
         setLoading(true);
@@ -95,10 +185,10 @@ const ProfileSetup = () => {
 
     function base64ToBlob(base64) {
         const byteCharacters = atob(base64);
-    const byteNumbers = Array.from(byteCharacters).map(char => char.charCodeAt(0));
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: 'image/png' });
-    }
+        const byteNumbers = Array.from(byteCharacters).map(char => char.charCodeAt(0));
+        const byteArray = new Uint8Array(byteNumbers);
+        return new Blob([byteArray], { type: 'image/png' });
+    };
 
     function downloadImage(base64, filename = 'download.png') {
         const blob = base64ToBlob(base64);
@@ -108,7 +198,7 @@ const ProfileSetup = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-    }
+    };
 
 
 
@@ -182,16 +272,66 @@ const ProfileSetup = () => {
                             */}
                         </div>
                     </div>
+                    <button className="download-btn" onClick={handleDownload}>Download Image</button>
                 </div>
+
                 <div className='savedImages'>
                     <div className='arrowArea'>
                         <img src={arrowIcon} alt='arrowIcon' onClick={toggleVisibility} className={imageFlipped ? 'flipped' : ''}/>
                     </div>
                     {drawerVisibility && (
                         <div className='savedDetails'>
-                            {user ? <div className="userImages">{images.map((imageUrl, index) => (
-        <img key={index} src={imageUrl} alt="User's saved" style={{ width: '150px', margin: '10px' }} />
-                            ))}</div> : <div>Please log in</div>}
+
+                            {user ?
+                            (<div className="user-images">
+                                <div className="userImage-1">
+                                    {userImage1 ? 
+                                    <div className="saved-render">
+                                        <div className="saved-buttons">
+                                            <button onClick={() => handleLoadImage(1)}>Load</button>
+                                            <button onClick={() => handleRemove(1)}>Remove</button>
+                                        </div>
+                                        <img className="saved-img" src={userImage1} alt="User's saved" style={{ width: '150px', margin: '10px' }} />
+                                    </div> 
+                                    : 
+                                    <div>
+                                        <button class="save-btn" onClick={() => handleUpload(1)}>Save to slot 1</button>
+                                    </div>}
+                                </div>
+
+                                <div className="userImage-2">
+                                    {userImage2 ? 
+                                    <div className="saved-render">
+                                        <div className="saved-buttons">
+                                            <button onClick={() => handleLoadImage(2)}>Load</button>
+                                            <button onClick={() => handleRemove(2)}>Remove</button>
+                                        </div>
+                                        <img className="saved-img" src={userImage2} alt="User's saved" style={{ width: '150px', margin: '10px' }} />
+                                    </div> 
+                                    : 
+                                    <div>
+                                        <button class="save-btn" onClick={() => handleUpload(2)}>Save to slot 2</button>
+                                    </div>}
+                                </div>
+
+                                <div className="userImage-3">
+                                    {userImage3 ? 
+                                    <div className="saved-render">
+                                        <div className="saved-buttons">
+                                            <button onClick={() => handleLoadImage(3)}>Load</button>
+                                            <button onClick={() => handleRemove(3)}>Remove</button>
+                                        </div>
+                                        <img className="saved-img" src={userImage3} alt="User's saved" style={{ width: '150px', margin: '10px' }} />
+                                    </div> 
+                                    : 
+                                    <div>
+                                        <button class="save-btn" onClick={() => handleUpload(3)}>Save to slot 3</button>
+                                    </div>}
+                                </div>
+                            </div>)
+                            :
+                            (<div className="pls-login"> Please Log In</div>) }
+                            
                         </div>
                     )}
                 </div>

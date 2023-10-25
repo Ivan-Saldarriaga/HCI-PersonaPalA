@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
+    window.location.reload()
   };
 
   const handleSignOut = async () => {
@@ -34,6 +35,7 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error signing out:", error);
     }
+    window.location.reload()
   };
 
   return (
