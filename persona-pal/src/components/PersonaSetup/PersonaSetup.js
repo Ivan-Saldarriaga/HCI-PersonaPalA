@@ -11,13 +11,67 @@ import { getUserImages, uploadToFirebase, getDownloadUrlForFile, removeImageByUr
 import { storage } from './../../firebase/config';
 import axios from 'axios';
 
+// Images
+import clean from "../../assets/selections/clean.png";
+import creative from "../../assets/selections/creative.png";
+import peaceful from "../../assets/selections/peaceful.png";
+import reverant from "../../assets/selections/reverant.png";
+import charismatic from "../../assets/selections/charismatic.png";
+import mischievous from "../../assets/selections/mischievous.png";
+import comedic from "../../assets/selections/comedic.png";
+import leader from "../../assets/selections/leader.png";
+import medieval from "../../assets/selections/medieval.png";
+import modern from "../../assets/selections/modern.png";
+import futuristic from "../../assets/selections/futuristic.png";
+import ancient from "../../assets/selections/ancient.png";
+import proud from "../../assets/selections/proud.png";
+import lazy from "../../assets/selections/lazy.png";
+import depressed from "../../assets/selections/depressed.png";
+import gluttonous from "../../assets/selections/gluttonous.png";
+import human from "./../../assets/selections/human.png";
+import orc from "./../../assets/selections/orc.png";
+import elf from "./../../assets/selections/elf.png";
+import fairy from "./../../assets/selections/fairy.png";
+
 const promptTemplate = "${0}, ${1}, ${3}, ${2} ${4}, masterpiece, best quality, high quality, self portrait";
 const ProfileSetup = () => {
-    const [selection1, setSelection1] = useState(["Clean","Creative","Peacefull","Reverant"]);
+    const [selection1, setSelection1] = useState(["Clean","Creative","Peaceful","Reverant"]);
     const [selection2, setSelection2] = useState(["Charismatic","Mischievous","Comedic","Leader"]);
     const [selection3, setSelection3] = useState(["Medieval","Modern","Futuristic","Ancient"]);
     const [selection4, setSelection4] = useState(["Proud","Lazy","Depressed","Gluttonous"]);
     const [selection5, setSelection5] = useState(["Human","Orc","Elf","Fairy"]);
+
+    const selectionImages1 = [
+        clean,
+        creative,
+        peaceful,
+        reverant,
+    ];
+    const selectionImages2 = [
+        charismatic,
+        mischievous,
+        comedic,
+        leader,
+    ];
+    const selectionImages3 = [
+        medieval,
+        modern,
+        futuristic,
+        ancient,
+    ];
+    const selectionImages4 = [
+        proud,
+        lazy,
+        depressed,
+        gluttonous,
+    ];
+    const selectionImages5 = [
+        human,
+        orc,
+        elf,
+        fairy,
+    ];
+
     const [selectedOptions, setSelectedOptions] = useState(["", "", "", "", ""]);
     {/* Firebase states*/}
     const [images, setImages] = useState([]);
@@ -30,11 +84,80 @@ const ProfileSetup = () => {
     const [image, updateImage] = useState();
     const [prompt, updatePrompt] = useState();
 
+    {/*selector state */}
+    const [currentStep, setCurrentStep] = useState(0);
+    
+    const handleNext = () => {
+        if (currentStep < 4 ) setCurrentStep(currentStep + 1);
+    }
+
+    const handleBack = () => {
+        if (currentStep > 0 ) setCurrentStep(currentStep - 1);
+    }
+
     const handleDropdownSelect = (index, selectedOption) => {
         const newSelectedOptions = [...selectedOptions];
-        newSelectedOptions[index - 1] = selectedOption;
+        newSelectedOptions[index] = selectedOption;
         setSelectedOptions(newSelectedOptions);
     };
+
+    const renderOptions = (name, options, stepIndex) => (
+        <div>
+            <p className="options-title">{name}</p>
+            <div className="options-grid">
+                {options.map(option => (
+                <div
+                    key={option.name}
+                    className={`option ${selectedOptions[stepIndex] === option.name ? 'selected' : ''}`}
+                    onClick={() => handleDropdownSelect(stepIndex, option.name)}
+                >
+                    <img src={option.image} alt={option.name} />
+                    <p>{option.name}</p>
+                </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderCurrentStep = () => {
+        let options;
+        let images;
+        let name;
+        switch (currentStep) {
+            case 0:
+                name = "Needs";
+                options = selection1;
+                images = selectionImages1;
+                break;
+            case 1:
+                name = "Skills";
+                options = selection2;
+                images = selectionImages2;
+                break;
+            case 2:
+                name = "Period";
+                options = selection3;
+                images = selectionImages3;
+                break;
+            case 3:
+                name = "Vice";
+                options = selection4;
+                images = selectionImages4;
+                break;
+            case 4:
+                name = "Race";
+                options = selection5;
+                images = selectionImages5;
+                break;
+        }
+
+        const combinedOptions = options.map((name, index) => ({
+            name, 
+            image: images[index]
+        }));
+
+        return renderOptions(name, combinedOptions, currentStep);
+    }
 
     const handleDropdownRemove = (index) => {
         const newSelectedOptions = [...selectedOptions];
@@ -44,13 +167,14 @@ const ProfileSetup = () => {
 
     const handleSubmit = () => {
         // Check if any of the selected strings are empty
+        console.log(selectedOptions);
         if (!user) {
-            alert("Please Log In");
+            alert("Please Log In.");
             return;
         }
         if (selectedOptions.some((option) => option === "")) {
             // If any of the strings are empty, prevent the submission
-            console.log("Please select an option from all dropdowns.");
+            alert("Please select an option from all dropdowns.");
             return;
         }
 
@@ -72,8 +196,6 @@ const ProfileSetup = () => {
                 return;
             }
             try {
-                //const imageURLs = await getUserImages(user);
-                //setImages(imageURLs);
                 getDownloadUrlForFile(`userImages/${user.uid}/image1.png`)
                     .then((downloadURL) => {
                         if (downloadURL !== null) {
@@ -174,7 +296,7 @@ const ProfileSetup = () => {
         else {
             downloadImage(image);
         }
-    }
+    };
 
     const generate = async (prompt) => {
         setLoading(true);
@@ -215,46 +337,11 @@ const ProfileSetup = () => {
                 <div className="independentVar">
                     <img src={SelectTraits} alt='header'/>
                     <div className='dropdown'>
-                        <Multiselect
-                        options={selection1}
-                        isObject = {false}
-                        singleSelect = {true}
-                        onSelect={(selectedOption) => handleDropdownSelect(1, selectedOption)}
-                        onRemove={() => handleDropdownRemove(1)}
-                        placeholder="Needs" // Property name to display in the dropdown options
-                        />
-                        <Multiselect
-                        options={selection2}
-                        isObject = {false}
-                        singleSelect = {true}
-                        onSelect={(selectedOption) => handleDropdownSelect(2, selectedOption)}
-                        onRemove={() => handleDropdownRemove(2)}
-                        placeholder="Skill" // Property name to display in the dropdown options
-                        />
-                        <Multiselect
-                        options={selection3}
-                        isObject = {false}
-                        singleSelect = {true}
-                        onSelect={(selectedOption) => handleDropdownSelect(3, selectedOption)}
-                        onRemove={() => handleDropdownRemove(3)}
-                        placeholder="Period" // Property name to display in the dropdown options
-                        />
-                        <Multiselect
-                        options={selection4}
-                        isObject = {false}
-                        singleSelect = {true}
-                        onSelect={(selectedOption) => handleDropdownSelect(4, selectedOption)}
-                        onRemove={() => handleDropdownRemove(4)}
-                        placeholder="Vice" // Property name to display in the dropdown options
-                        />
-                        <Multiselect
-                        options={selection5}
-                        isObject = {false}
-                        singleSelect = {true}
-                        onSelect={(selectedOption) => handleDropdownSelect(5, selectedOption)}
-                        onRemove={() => handleDropdownRemove(5)}
-                        placeholder="Race" // Property name to display in the dropdown options
-                        />
+                        {renderCurrentStep()}
+                        <div className="selector-buttons">
+                            <button onClick={handleBack} disabled={currentStep === 0}>Back</button>
+                            <button onClick={handleNext} disabled={currentStep === 4}>Next</button>
+                        </div>
                     </div>
                     <div className='buttonArea'>
                         <button className='submitButton' onClick={handleSubmit}>Submit!</button>
@@ -281,7 +368,6 @@ const ProfileSetup = () => {
                     </div>
                     {drawerVisibility && (
                         <div className='savedDetails'>
-
                             {user ?
                             (<div className="user-images">
                                 <div className="userImage-1">

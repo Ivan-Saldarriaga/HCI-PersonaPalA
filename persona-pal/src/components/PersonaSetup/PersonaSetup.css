@@ -66,6 +66,8 @@
 }
 .independentVar img{
     scale: 0.6;
+    margin-top: 0;
+    margin-bottom: 0em;
 }
 .dropdown{
     padding: 40px 20px;
@@ -87,6 +89,11 @@
     width: 150px;
     height: 40px;
 }
+
+.submitButton:hover {
+  opacity: 0.8;
+}
+
 .arrowArea{
     padding: 0 15px;
 }
@@ -116,6 +123,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .user-images {
+    height: 100%;
+    width: 100%;
   }
 
   .userImages {
@@ -163,4 +175,73 @@
 
   .pls-login {
     color: #E7AAF1;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
+    
+  }
+  
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    height: 130px;
+    background-color: #E7AAF1;
+    transition: all 0.3s ease; /* For a smooth transition effect */
+    border-radius: 10%;
+  }
+
+  .option:hover {
+    opacity: 0.5;
+  }
+
+  .option p {
+    margin-top: 0;
+  }
+  
+  .option img {
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover;
+    margin-bottom: 0;
+  }
+  
+  .selector-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+  .selector-buttons button {
+    height: 30px;
+    width: 80px;
+    border-radius: 5%;
+  }
+
+  .option.selected {
+    background-color: rgba(0, 0, 0, 0.2); /* Darken background */
+    border: 2px solid #E7AAF1; /* Or add a border */
+  }
+
+  .buttonArea {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .options-title {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    color: #E7AAF1; 
+    font-size: 20px;
+    margin-top: 0;
   }
