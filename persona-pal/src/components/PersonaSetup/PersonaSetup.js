@@ -125,7 +125,7 @@ const ProfileSetup = () => {
         let name;
         switch (currentStep) {
             case 0:
-                name = "Needs";
+                name = "Motivation";
                 options = selection1;
                 images = selectionImages1;
                 break;
