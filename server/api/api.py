@@ -18,9 +18,19 @@ app.add_middleware(
 )
 
 device = 'cuda'
+
+# base model
 model_id = "CompVis/stable-diffusion-v1-4"
 pipe = StableDiffusionPipeline.from_pretrained(model_id, revision="fp16", torch_dtype=torch.float16, use_auth_token=auth_token)
+
+# Ghibli
+# model_id = "nitrosocke/Ghibli-Diffusion"
+# pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+
+# pipe = StableDiffusionXLPipeline.from_pretrained("segmind/SSD-1B", torch_dtype=torch.float16, use_safetensors=True, variant="fp16")
+
 pipe.to(device)
+
 
 @app.get("/")
 def generate(prompt): 
