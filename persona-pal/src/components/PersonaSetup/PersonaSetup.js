@@ -221,7 +221,7 @@ const ProfileSetup = () => {
                         singleSelect = {true}
                         onSelect={(selectedOption) => handleDropdownSelect(1, selectedOption)}
                         onRemove={() => handleDropdownRemove(1)}
-                        placeholder="Needs" // Property name to display in the dropdown options
+                        placeholder="Motivation" // Property name to display in the dropdown options
                         />
                         <Multiselect
                         options={selection2}
