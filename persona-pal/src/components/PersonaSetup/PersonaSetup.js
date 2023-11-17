@@ -288,7 +288,7 @@ const ProfileSetup = () => {
                         <div className='savedDetails'>
 
                             {user ?
-                            (<div className="user-images">
+                            (<div className="userImages">
                                 <div className="userImage-1">
                                     {userImage1 ? 
                                     <div className="saved-render">
