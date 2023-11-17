@@ -222,6 +222,7 @@ const ProfileSetup = () => {
                         onSelect={(selectedOption) => handleDropdownSelect(1, selectedOption)}
                         onRemove={() => handleDropdownRemove(1)}
                         placeholder="Motivation" // Property name to display in the dropdown options
+                        className='dropdown-select'
                         />
                         <Multiselect
                         options={selection2}
@@ -230,6 +231,7 @@ const ProfileSetup = () => {
                         onSelect={(selectedOption) => handleDropdownSelect(2, selectedOption)}
                         onRemove={() => handleDropdownRemove(2)}
                         placeholder="Skill" // Property name to display in the dropdown options
+                        className='dropdown-select'
                         />
                         <Multiselect
                         options={selection3}
@@ -238,6 +240,7 @@ const ProfileSetup = () => {
                         onSelect={(selectedOption) => handleDropdownSelect(3, selectedOption)}
                         onRemove={() => handleDropdownRemove(3)}
                         placeholder="Period" // Property name to display in the dropdown options
+                        className='dropdown-select'
                         />
                         <Multiselect
                         options={selection4}
@@ -246,6 +249,7 @@ const ProfileSetup = () => {
                         onSelect={(selectedOption) => handleDropdownSelect(4, selectedOption)}
                         onRemove={() => handleDropdownRemove(4)}
                         placeholder="Vice" // Property name to display in the dropdown options
+                        className='dropdown-select'
                         />
                         <Multiselect
                         options={selection5}
@@ -254,6 +258,7 @@ const ProfileSetup = () => {
                         onSelect={(selectedOption) => handleDropdownSelect(5, selectedOption)}
                         onRemove={() => handleDropdownRemove(5)}
                         placeholder="Race" // Property name to display in the dropdown options
+                        className='dropdown-select'
                         />
                     </div>
                     <div className='buttonArea'>

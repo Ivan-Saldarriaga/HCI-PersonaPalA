@@ -80,12 +80,20 @@
     scale: 0.6;
 }
 .dropdown{
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    background-color: rgba(231, 170, 241, .9);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-color: rgba(231, 170, 241, .9);
+  margin: 1em;
+  border-radius: 1%;
 }
+
+.dropdown-select input::placeholder {
+  color: black; /* Replace with your desired color */
+}
+
+
 .buttonArea{
     text-align: right;
     padding: 0 20px;
