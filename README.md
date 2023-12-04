@@ -1,5 +1,5 @@
 # HCI-PersonaPalA
-Human-Computer Interaction (Design A)
+Human-Computer Interaction (Design B)
 
 Team: Ivan Saldarriaga, Wavid Bowman, Tam Huynh, Yunxiao Chen (Charis)
 ## Front-End
